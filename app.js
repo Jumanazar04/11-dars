@@ -51,6 +51,10 @@ let subjects = [
 
 const subjectsEl = document.querySelector(".subjects");
 const fan = document.querySelector(".fan");
+const muddat = document.querySelector(".muddat");
+const price = document.querySelector(".price");
+const sorting = document.querySelector(".sorting");
+
 
 function renderSubjects(subject){
     const subjectEl = document.createElement("div");
@@ -106,3 +110,80 @@ fan.addEventListener("change", (e)=>{
     }
 })
 
+muddat.addEventListener("change", (e)=>{
+    let newArr = []
+    if (e.target.value == 'all') {
+        getSubjects(subjects);
+    }else {
+        subjects.filter((el) =>{
+            if (e.target.value == el.duration) {
+                newArr.push(el);
+                getSubjects(newArr)
+            }
+        })
+    }
+})
+
+price.addEventListener("change", (e)=>{
+    let newArr = []
+    if (e.target.value == 'all') {
+        getSubjects(subjects);
+    }else {
+        subjects.filter((el) =>{
+            if (e.target.value == el.price) {
+                newArr.push(el);
+                getSubjects(newArr)
+            }
+        })
+    }
+})
+
+sorting.addEventListener("change", (e)=>{
+    if (e.target.value == 'all') {
+        getSubjects(subjects)
+    } else if(e.target.value == 'high'){
+        let sorted = subjects.sort((el1, el2) =>{
+            if (el2.price < el1.price) {
+                return -1
+            }
+            if (el2.price > el1.price) {
+                return 1
+            }
+            return 0
+        })
+        getSubjects(sorted)
+    } else if(e.target.value == "low"){
+        let sorted = subjects.sort((el1, el2) =>{
+            if (el2.price > el1.price) {
+                return -1
+            }
+            if (el2.price < el1.price) {
+                return 1
+            }
+            return 0
+        })
+        getSubjects(sorted)
+    }else if(e.target.value == "long"){
+        let sorted = subjects.sort((el1, el2) =>{
+            if (el2.duration < el1.duration) {
+                return -1
+            }
+            if (el2.duration > el1.duration) {
+                return 1
+            }
+            return 0
+        })
+        getSubjects(sorted)
+    }else if(e.target.value == "short"){
+        let sorted = subjects.sort((el1, el2) =>{
+            if (el2.duration > el1.duration) {
+                return -1
+            }
+            if (el2.duration < el1.duration) {
+                return 1
+            }
+            return 0
+        })
+        getSubjects(sorted)
+    }
+})
